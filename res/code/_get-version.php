@@ -27,7 +27,6 @@
         $json = @file_get_contents($this->versionJsonFilename);
         if($json === FALSE) {
           $json = @file_get_contents("{$this->downloadsApiVersionUrl}/$platform");
-          var_dump($json);
         }
 
         if($json !== NULL && $json !== FALSE) {
