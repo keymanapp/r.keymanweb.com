@@ -128,6 +128,14 @@
     echo getutf8(file_get_contents("{$KeymanWebRoot}\\kmwuitoggle.js"));
   }
   
+  // For test hosts only: $StaticResourceDomain='s.keyman.com';
+
+  // Translate $langid into appropriate BCP-47 code, so existing bookmarklets continue to work.
+  // In the future, the bookmarklet registration code at keyman.com/bookmarklet should use BCP-47,
+  // but that won't impact this.
+  require_once('legacy_utils.php'); // Note: this is a clone of api.keyman.com/script/legacy/legacy_utils.php
+  $langid = translate6393ToBCP47($langid);
+
   echo <<<END
 (function() {
   $kmwbase.init({
