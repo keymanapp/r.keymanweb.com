@@ -24,9 +24,10 @@
         // For now, we use alpha from local instance of s.keyman.com because 
         // downloads.keyman.com may be out of sync with s.keyman.com for alpha.
         // As we stablise the CI server, we may be able to eliminate this
-        $json = file_get_contents($this->versionJsonFilename);
-        if($json === NULL) {
+        $json = @file_get_contents($this->versionJsonFilename);
+        if($json === FALSE) {
           $json = @file_get_contents("{$this->downloadsApiVersionUrl}/$platform");
+          var_dump($json);
         }
 
         if($json !== NULL && $json !== FALSE) {
