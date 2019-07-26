@@ -86,8 +86,10 @@
   $keymanVersion = new KeymanVersion();
   $ver = $keymanVersion->getVersion('web', 'stable');
   if(empty($ver)) {
+    echo "console.log('WARNING: KeymanWeb stable version not found');\n";
     $ver = $keymanVersion->getVersion('web', 'beta');
     if(empty($ver)) {
+      echo "console.log('WARNING: KeymanWeb beta version not found');\n";
       $ver = $keymanVersion->getVersion('web', 'alpha');
       if(empty($ver)) {
         echo "console.log('ERROR: KeymanWeb version not found');";
@@ -106,20 +108,9 @@
   
   // Read the KeymanWeb code from s.keyman.com/
   $KeymanWebRoot = "{$KeymanCloudRootPath}kmw\\engine\\{$ver}";
-  
-  //
-  // Note: we need at least version 2.0.465
-  //
-  
-  if(intval($build) < 465) {
-    echo "console.log('KeymanWeb ($ver) build $build is lower than 465. This may cause KeymanWeb to fail.');";
-  }
 
-  if(intval($ver_array[0]) >= 10) {
-    $kmwbase = "keyman";
-  } else {
-    $kmwbase = "tavultesoft.keymanweb";
-  }
+  // We always load latest stable, which at 10.0 and later, uses `keyman` as global var
+  $kmwbase = "keyman";
  
   if($debug) {
     echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\kmwstring.js"));
@@ -137,13 +128,20 @@
     echo getutf8(file_get_contents("{$KeymanWebRoot}\\kmwuitoggle.js"));
   }
   
+  // For test hosts only: $StaticResourceDomain='s.keyman.com';
+
+  // Translate $langid into appropriate BCP-47 code, so existing bookmarklets continue to work.
+  // In the future, the bookmarklet registration code at keyman.com/bookmarklet should use BCP-47,
+  // but that won't impact this.
+  require_once('legacy_utils.php'); // Note: this is a clone of api.keyman.com/script/legacy/legacy_utils.php
+  $langid = translate6393ToBCP47($langid);
+
   echo <<<END
 (function() {
-  //console.log('path');
   $kmwbase.init({
-    root: "//{$StaticResourceDomain}/kmw/engine/{$build}/", 
-    resources: "//{$StaticResourceDomain}/kmw/engine/{$build}/", 
-    keyboards: "//{$StaticResourceDomain}/keyboard/",
+    root: "https://{$StaticResourceDomain}/kmw/engine/{$ver}/", 
+    resources: "https://{$StaticResourceDomain}/kmw/engine/{$ver}/", 
+    keyboards: "https://{$StaticResourceDomain}/keyboard/",
     ui: "toggle"
   });
   $kmwbase.addKeyboards("$keyboard@$langid");
