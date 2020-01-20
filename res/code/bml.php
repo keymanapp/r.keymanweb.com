@@ -8,7 +8,6 @@
   */
   ini_set('track_errors', 1);
 
-  require_once('./sitesettings.php');
   require_once('./_timestamp.php');
   
   /*
@@ -107,28 +106,28 @@
   $build = $ver_array[2];
   
   // Read the KeymanWeb code from s.keyman.com/
-  $KeymanWebRoot = "{$KeymanCloudRootPath}kmw\\engine\\{$ver}";
+  $KeymanWebRoot = "https://s.keyman.com/kmw/engine/{$ver}";
 
   // We always load latest stable, which at 10.0 and later, uses `keyman` as global var
   $kmwbase = "keyman";
  
   if($debug) {
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\kmwstring.js"));
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\kmwbase.js"));
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\keymanweb.js"));
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\kmwosk.js"));
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\kmwnative.js"));
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\kmwcallback.js"));
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\kmwkeymaps.js"));
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\kmwlayout.js"));
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\kmwinit.js"));
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\src\\kmwuitoggle.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwstring.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwbase.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/src/keymanweb.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwosk.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwnative.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwcallback.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwkeymaps.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwlayout.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwinit.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwuitoggle.js"));
   } else {
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\keymanweb.js"));
-    echo getutf8(file_get_contents("{$KeymanWebRoot}\\kmwuitoggle.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/keymanweb.js"));
+    echo getutf8(file_get_contents("{$KeymanWebRoot}/kmwuitoggle.js"));
   }
   
-  // For test hosts only: $StaticResourceDomain='s.keyman.com';
+  $StaticResourceDomain='s.keyman.com';
 
   // Translate $langid into appropriate BCP-47 code, so existing bookmarklets continue to work.
   // In the future, the bookmarklet registration code at keyman.com/bookmarklet should use BCP-47,
