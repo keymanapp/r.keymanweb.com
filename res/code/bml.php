@@ -111,7 +111,11 @@
   // We always load latest stable, which at 10.0 and later, uses `keyman` as global var
   $kmwbase = "keyman";
  
-  if($debug) {
+  /*if($debug) {
+    // unminified version is not currently available on s.keyman.com,
+    // but it's not the end of the world because we do have sourcemaps
+    // and this is only for the bookmarklet which doesn't typically
+    // need external debugging.
     echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwstring.js"));
     echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwbase.js"));
     echo getutf8(file_get_contents("{$KeymanWebRoot}/src/keymanweb.js"));
@@ -122,10 +126,10 @@
     echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwlayout.js"));
     echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwinit.js"));
     echo getutf8(file_get_contents("{$KeymanWebRoot}/src/kmwuitoggle.js"));
-  } else {
+  } else {*/
     echo getutf8(file_get_contents("{$KeymanWebRoot}/keymanweb.js"));
     echo getutf8(file_get_contents("{$KeymanWebRoot}/kmwuitoggle.js"));
-  }
+  /*}*/
   
   $StaticResourceDomain='s.keyman.com';
 
