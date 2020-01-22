@@ -1,20 +1,20 @@
 <?php
-  require_once('util.php');
+  //require_once('util.php');
   if(!isset($_REQUEST['id'])) {
     header("Location: keyman://localhost/open");
-    flush();
+    //flush();
     exit;
   }
   
   if(!preg_match('/^[a-zA-Z0-9_.-]+\.mobileconfig$/', $_REQUEST['id'])) {
     header("Location: keyman://localhost/open");
-    flush();
+    //flush();
     exit;
   }
   
   if(!file_exists($_REQUEST['id'])) {
     header("Location: keyman://localhost/open");
-    flush();
+    //flush();
     exit;
   }  
 ?>
