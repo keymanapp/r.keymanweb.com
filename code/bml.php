@@ -9,37 +9,37 @@
   ini_set('track_errors', 1);
 
   require_once('./_timestamp.php');
-  
+
   /*
     End of server variables
   */
-  
+
   dotimestamp();
-   
+
   ob_start();
   date_default_timezone_set('UTC');
-  
+
   header("Content-Type: text/javascript; charset=UTF-8");
-  
+
   // Date in the past
   header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-  
+
   // always modified
   header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-  
+
   // HTTP/1.1
   header("Cache-Control: no-store, no-cache, must-revalidate");
   header("Cache-Control: post-check=0, pre-check=0", false);
-  
+
   // HTTP/1.0
-  header("Pragma: no-cache");  
-  
+  header("Pragma: no-cache");
+
   /*
    * Check parameters for validity
-   */ 
+   */
 
   dotimestamp('Finished header');
-  
+
   function InvalidCall($code)
   {
     echo "alert('KeymanWeb: Invalid call to r.keymanweb.com - $code');";
@@ -50,34 +50,36 @@
   if(substr($domain, 0, 4) == 'www.') $domain = substr($domain, 4);
 
   $page = isset($_GET['page']) ? $_GET['page'] : '';
-  
+
   if(!isset($_GET['keyboard'])) InvalidCall('keyboard missing');
   $keyboard = $_GET['keyboard'];
   if(!preg_match('/^[a-zA-Z0-9_]+$/', $keyboard)) InvalidCall('Invalid keyboard name');
-  
+
   $lang = isset($_GET['lang']) ? $_GET['lang'] : '';
-  
+
   if(!isset($_GET['langid'])) InvalidCall('language id missing');
   $langid = $_GET['langid'];
-  if(!preg_match('/^[a-z][a-z][a-z]$/', $langid)) InvalidCall('invalid language id');
-  
+  // We no longer attempt to validate the language identifier as we support BCP 47
+  // inputs. In the future we may want to validate BCP 47 codes but it's not critical
+  //if(!preg_match('/^[a-z][a-z][a-z]$/', $langid)) InvalidCall('invalid language id');
+
   $debug = isset($_GET['debug']) && $_GET['debug'] === '1';
-  
+
   dotimestamp('Loaded data');
-  
+
   if(isset($_SERVER['HTTP_REFERER'])) $referer = $_SERVER['HTTP_REFERER']; else $referer = '';
-  
+
   /*
    * Log the visit
    */
 
   // TODO: Log to Google Analytics
-  
+
   dotimestamp('Finished logging visit');
-  
+
   /*
    * Output keymanweb.js and load keyboard
-   */ 
+   */
 
   // Locate current keymanweb.js (stable 2.0)
 
@@ -96,7 +98,7 @@
       }
     }
   }
-    
+
   function getutf8($s) {
     if(substr($s, 0, 3) == chr(0xEF).chr(0xBB).chr(0xBF)) return substr($s, 3);
     return $s;
@@ -104,13 +106,13 @@
 
   $ver_array = explode('.', $ver);
   $build = $ver_array[2];
-  
+
   // Read the KeymanWeb code from s.keyman.com/
   $KeymanWebRoot = "https://s.keyman.com/kmw/engine/{$ver}";
 
   // We always load latest stable, which at 10.0 and later, uses `keyman` as global var
   $kmwbase = "keyman";
- 
+
   /*if($debug) {
     // unminified version is not currently available on s.keyman.com,
     // but it's not the end of the world because we do have sourcemaps
@@ -130,7 +132,7 @@
     echo getutf8(file_get_contents("{$KeymanWebRoot}/keymanweb.js"));
     echo getutf8(file_get_contents("{$KeymanWebRoot}/kmwuitoggle.js"));
   /*}*/
-  
+
   $StaticResourceDomain='s.keyman.com';
 
   // Translate $langid into appropriate BCP-47 code, so existing bookmarklets continue to work.
@@ -142,8 +144,8 @@
   echo <<<END
 (function() {
   $kmwbase.init({
-    root: "https://{$StaticResourceDomain}/kmw/engine/{$ver}/", 
-    resources: "https://{$StaticResourceDomain}/kmw/engine/{$ver}/", 
+    root: "https://{$StaticResourceDomain}/kmw/engine/{$ver}/",
+    resources: "https://{$StaticResourceDomain}/kmw/engine/{$ver}/",
     keyboards: "https://{$StaticResourceDomain}/keyboard/",
     ui: "toggle"
   });
@@ -152,8 +154,8 @@
 END;
 
   dotimestamp('Finished output');
-  
+
   reviewtimestamp();
-  
+
   ob_end_flush();
 ?>
