@@ -1,9 +1,9 @@
 (function() {
-  // // Live version
-  // let HOST = 'https://r.keymanweb.com';
+  // Live version
+  let HOST = 'https://r.keymanweb.com';
 
-  // Debug / dev version
-  let HOST = 'http://r.keymanweb.com.local';
+  // // Debug / dev version
+  // let HOST = 'http://r.keymanweb.com.local';
 
   function construct_bookmarklet_stylesheet() {
     let style = document.createElement('style');
