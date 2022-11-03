@@ -1,0 +1,16 @@
+.keyman-bookmarklet {
+  font-size: 11px;
+}
+
+.keyman-bookmarklet a {
+  padding: 4px 4px 4px 24px;
+  background: #D3DAED url('./keymanweb-icon-16.png') 4px 4px no-repeat scroll;
+  box-shadow: 3px 3px 6px rgba(50,52,56,0.3);
+  text-decoration: none;
+  color: #000000;
+  text-align: left;
+  display: inline-block;
+  height: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+}
