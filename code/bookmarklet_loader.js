@@ -1,4 +1,4 @@
-function loadBookmarklet(kbdid, langid) {
+function loadKeymanWebBookmarklet(kbdid, langid) {
   var loader = () => window['keyman'].addKeyboards(kbdid + "@" + langid);
 
   if(window['keyman'] instanceof Promise) {
@@ -12,7 +12,9 @@ function loadBookmarklet(kbdid, langid) {
         e.type='text/javascript';
         e.onload = resolve;
         e.onerror = reject;
-        e.src='https://r.keymanweb.com/code/bml20.php?langid=' + langid + '&keyboard=' + kbdid;
+        e.src='https://r.keymanweb.com/code/bml20.php' +
+              '?langid='   + encodeURIComponent(langid) +
+              '&keyboard=' + encodeURIComponent(kbdid);
         document.body.appendChild(e);
       } catch(v) {};
     });
