@@ -16,7 +16,7 @@ function loadKeymanWebBookmarklet(kbdid, langid) {
               '?langid='   + encodeURIComponent(langid) +
               '&keyboard=' + encodeURIComponent(kbdid);
         document.body.appendChild(e);
-      } catch(v) {};
-    });
+      } catch(v) { reject(v) };
+    }).catch(error => console.error("KeymanWeb Bookmarklet failed to initialize: " + error));
   }
 }
