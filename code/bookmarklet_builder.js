@@ -1,11 +1,5 @@
 (function() {
-  // Live version
-  var HOST = 'https://r.keymanweb.com';
-
-  // // Debug / dev version
-  // var HOST = 'http://r.keymanweb.com.local';
-
-  function construct_bookmarklet_code(kbdid, langid) {
+  function construct_bookmarklet_code(host, kbdid, langid) {
     var code = `
 (function(e) {
   e=document.createElement('script');
@@ -13,7 +7,7 @@
   e.onload=() => {
     loadKeymanWebBookmarklet('${kbdid}', '${langid}');
   };
-  e.src='${HOST}/code/bookmarklet_loader.js';
+  e.src='${host}/code/bookmarklet_loader.js';
   document.body.appendChild(e);
 })()`;
 
@@ -25,7 +19,7 @@
     return `javascript:void(${code})`;
   }
 
-  function construct_bookmarklet(kbdid, langid, kbdname, text) {
+  function construct_bookmarklet(host, kbdid, langid, kbdname, text) {
     var bml = document.createElement('div'); // We may wish to use shadow-dom in the future,
                                              // which can't be applied to <a> elements.
     bml.classList.add('keyman-bookmarklet');
@@ -36,7 +30,7 @@
     link.text = text || kbdid;
     bml.appendChild(link);
 
-    link.href = construct_bookmarklet_code(kbdid, langid);
+    link.href = construct_bookmarklet_code(host, kbdid, langid);
 
     // Tracker integration.
     link.onmousedown = function() {
