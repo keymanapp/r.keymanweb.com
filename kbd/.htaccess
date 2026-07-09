@@ -1,0 +1,5 @@
+# Proxy /kbd/japanese.php and /kbd/chinese_pinyin.php to
+# api.keyman.com/script/cjk/... (including parameters)
+
+RewriteEngine on
+RewriteRule "^((japanese\.php|chinese_pinyin\.php).*)$"    "https://api.keyman.com/script/cjk/$1" [P]

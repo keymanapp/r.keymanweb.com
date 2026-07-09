@@ -1,0 +1,5 @@
+
+RewriteEngine on
+RewriteRule "^get-version(\/([^/]+)(\/([^/]+))?)?$"    "https://api.keyman.com/script/version/version.php?platform=$2&level=$4" [P]
+RewriteRule "^get-version.php"    "https://api.keyman.com/script/version/version.php" [QSA,P]
+RewriteRule "^bml20.php"    "bml.php" [QSA,L]
