@@ -1,0 +1,3 @@
+
+RewriteEngine on
+RewriteRule "^(.+)$"    "https://api.keyman.com/cloud/$1" [P]

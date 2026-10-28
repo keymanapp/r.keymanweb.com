@@ -4,3 +4,5 @@ r.keymanweb.com - legacy site for keymanweb
 * api/ redirects to https://api.keyman.com/cloud/
 * code/bml.php is the bookmarklet
 * kbd/ are the endpoints for Chinese and Japanese keyboard pickers.
+
+Setup to run on Docker
