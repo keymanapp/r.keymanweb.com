@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Site
-FROM php:7.4-apache@sha256:c9d7e608f73832673479770d66aacc8100011ec751d1905ff63fae3fe2e0ca6d
+FROM php:8.4-apache@sha256:56e7dab56ae21ec10aae951f93cbe7069c1ca68a714dd22ca78724268c78f5de
 COPY resources/keyman-site.conf /etc/apache2/conf-available/
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 RUN chown -R www-data:www-data /var/www/html/
