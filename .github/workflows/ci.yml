@@ -1,0 +1,49 @@
+name: CI
+
+on: [pull_request]
+
+jobs:
+
+  build-test:
+    runs-on: ubuntu-latest
+    env:
+      KEYMANHOSTS_TIER: TIER_TEST
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6.0.2
+
+    # Build the docker image
+    - name: Build the Docker image
+      shell: bash
+      run: |
+        echo "TIER_TEST" > tier.txt
+        ./build.sh build start
+      env:
+        fail-fast: true
+
+    #
+    # Tests (no unit tests for this site); split into separate steps for ease of reading results
+    #
+    - name: Lint
+      if: ${{ !cancelled() }}
+      shell: bash
+      run: ./build.sh test --no-php-error-check
+
+    - name: Check PHP errors
+      if: ${{ !cancelled() }}
+      shell: bash
+      run: ./build.sh test --no-lint
+
+    #
+    # If any of the tests fail, let's grab a bit more detail on the environment
+    #
+    - name: Report errors
+      if: ${{ failure() }}
+      shell: bash
+      run: ./build.sh test --no-lint
+
+    - name: Verify .bootstrap-required-version
+      if: ${{ !cancelled() }}
+      shell: bash
+      run: ./build.sh verify_bootstrap_required_version
